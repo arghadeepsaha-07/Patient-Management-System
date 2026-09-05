@@ -32,6 +32,7 @@ The project implements **user registration, login, JWT-based authentication, com
 * **SQLAlchemy**
 * **Pydantic**
 * **Uvicorn**
+* **JWT Authentication**
 * **Swagger / OpenAPI**
 
 ## 🔐 Authentication
@@ -41,15 +42,15 @@ The API provides user authentication through **registration, login, and JWT acce
 ### Authentication Flow
 
 ```text
-Register
-   ↓
-Login
-   ↓
+User Registration
+       ↓
+User Login
+       ↓
 Receive JWT Access Token
-   ↓
+       ↓
 Send Token with Protected Requests
-   ↓
-Access Patient Management Endpoints
+       ↓
+Access Protected Patient Endpoints
 ```
 
 ### Register
@@ -62,7 +63,7 @@ POST /auth/register
 
 ### Login
 
-Authenticates an existing user and returns an access token.
+Authenticates an existing user and returns a JWT access token.
 
 ```text
 POST /auth/login
@@ -70,13 +71,13 @@ POST /auth/login
 
 ### Authentication Check
 
-Checks whether the current request contains valid authentication credentials.
+Verifies whether the current request contains valid authentication credentials.
 
 ```text
 GET /auth/is_auth
 ```
 
-Protected patient endpoints require a valid JWT access token.
+Protected patient-management endpoints require a valid JWT access token.
 
 ```text
 Authorization: Bearer <access_token>
@@ -86,21 +87,21 @@ Authorization: Bearer <access_token>
 
 ### 🔐 Authentication
 
-| Method | Endpoint | Description         |
-| ------ | -------- | ------------------- |
-| `POST` | `/...`   | User authentication |
+| Method | Endpoint         | Description                              |
+| ------ | ---------------- | ---------------------------------------- |
+| `POST` | `/auth/register` | Register a new user                      |
+| `POST` | `/auth/login`    | Login and receive a JWT access token     |
+| `GET`  | `/auth/is_auth`  | Verify whether the user is authenticated |
 
 ### 🏥 Patient Management
 
-| Method   | Endpoint              | Description                 |
-| -------- | --------------------- | --------------------------- |
-| `GET`    | `/GET/get`            | Retrieves all patients      |
-| `GET`    | `/GET/get/{id}`       | Retrieves a patient by ID   |
-| `POST`   | `/CREATE/create`      | Creates a new patient       |
-| `PUT`    | `/UPDATE/update/{id}` | Updates patient information |
-| `DELETE` | `/DELETE/delete/{id}` | Deletes a patient           |
-
-> **Note:** Replace these paths only if your actual FastAPI router prefixes or endpoint paths are different.
+| Method   | Endpoint              | Description                |
+| -------- | --------------------- | -------------------------- |
+| `GET`    | `/GET/get`            | Retrieve all patients      |
+| `GET`    | `/GET/get/{id}`       | Retrieve a patient by ID   |
+| `POST`   | `/CREATE/create`      | Create a new patient       |
+| `PUT`    | `/UPDATE/update/{id}` | Update patient information |
+| `DELETE` | `/DELETE/delete/{id}` | Delete a patient           |
 
 ## ✅ Validation
 
@@ -186,12 +187,12 @@ Patient-Management-System/
 │
 ├── .env
 ├── .gitignore
-├── main.py
 ├── requirements.txt
+├── main.py
 └── README.md
 ```
 
-> ⚠️ **Security:** The `.env` file should be listed in `.gitignore` and should **not** be committed to GitHub. Use a `.env.example` file containing placeholder values if you want to document the required environment variables.
+> ⚠️ **Security:** The `.env` file should be listed in `.gitignore` and should **not** be committed to GitHub. Use a `.env.example` file with placeholder values to document required environment variables.
 
 ## ⚙️ Installation
 
@@ -304,3 +305,4 @@ PostgreSQL
 ```
 
 The project demonstrates how these components work together to build a structured and authenticated RESTful backend application.
+together to build a structured and authenticated RESTful backend application.
