@@ -32,10 +32,7 @@ The project implements **user registration, login, JWT-based authentication, com
 * **SQLAlchemy**
 * **Pydantic**
 * **Uvicorn**
-* **JWT Authentication**
 * **Swagger / OpenAPI**
-
-> If your implementation specifically uses `OAuth2PasswordBearer`, you can additionally mention **OAuth2 Password Bearer** here.
 
 ## 🔐 Authentication
 
@@ -89,21 +86,19 @@ Authorization: Bearer <access_token>
 
 ### 🔐 Authentication
 
-| Method | Endpoint         | Description                              |
-| ------ | ---------------- | ---------------------------------------- |
-| `POST` | `/auth/register` | Register a new user                      |
-| `POST` | `/auth/login`    | Login and receive an access token        |
-| `GET`  | `/auth/is_auth`  | Verify whether the user is authenticated |
+| Method | Endpoint | Description         |
+| ------ | -------- | ------------------- |
+| `POST` | `/...`   | User authentication |
 
 ### 🏥 Patient Management
 
-| Method   | Endpoint                 | Description                |
-| -------- | ------------------------ | -------------------------- |
-| `POST`   | `/patients/`             | Create a new patient       |
-| `GET`    | `/patients/`             | Retrieve all patients      |
-| `GET`    | `/patients/{patient_id}` | Retrieve a patient by ID   |
-| `PUT`    | `/patients/{patient_id}` | Update patient information |
-| `DELETE` | `/patients/{patient_id}` | Delete a patient           |
+| Method   | Endpoint              | Description                 |
+| -------- | --------------------- | --------------------------- |
+| `GET`    | `/GET/get`            | Retrieves all patients      |
+| `GET`    | `/GET/get/{id}`       | Retrieves a patient by ID   |
+| `POST`   | `/CREATE/create`      | Creates a new patient       |
+| `PUT`    | `/UPDATE/update/{id}` | Updates patient information |
+| `DELETE` | `/DELETE/delete/{id}` | Deletes a patient           |
 
 > **Note:** Replace these paths only if your actual FastAPI router prefixes or endpoint paths are different.
 
