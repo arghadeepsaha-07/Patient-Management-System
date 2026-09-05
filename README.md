@@ -41,19 +41,35 @@ Authenticated requests require the appropriate authentication credentials before
 
 ### Authentication
 
-| Method | Endpoint | Description         |
-| ------ | -------- | ------------------- |
-| `POST` | `/...`   | User authentication |
+## 📡 API Endpoints
 
-### Patient Management
+## 📡 API Endpoints
 
-| Method   | Endpoint              | Description                 |
-| -------- | --------------------- | --------------------------- |
-| `GET`    | `/GET/get`            | Retrieves all patients      |
-| `GET`    | `/GET/get/{id}`       | Retrieves a patient by ID   |
-| `POST`   | `/CREATE/create`      | Creates a new patient       |
-| `PUT`    | `/UPDATE/update/{id}` | Updates patient information |
-| `DELETE` | `/DELETE/delete/{id}` | Deletes a patient           |
+### 🔐 Authentication
+
+| Method | Endpoint         | Description                              |
+| ------ | ---------------- | ---------------------------------------- |
+| `POST` | `/auth/register` | Register a new user                      |
+| `POST` | `/auth/login`    | Login and receive an access token        |
+| `GET`  | `/auth/is_auth`  | Verify whether the user is authenticated |
+
+### 🏥 Patient Management
+
+| Method   | Endpoint                 | Description                |
+| -------- | ------------------------ | -------------------------- |
+| `POST`   | `/patients/`             | Create a new patient       |
+| `GET`    | `/patients/`             | Get all patients           |
+| `GET`    | `/patients/{patient_id}` | Get a patient by ID        |
+| `PUT`    | `/patients/{patient_id}` | Update patient information |
+| `DELETE` | `/patients/{patient_id}` | Delete a patient           |
+
+### 🔑 Authorization
+
+Protected patient endpoints require a valid JWT access token.
+
+```text
+Authorization: Bearer <access_token>
+```
 
 > Update the authentication endpoint and patient paths above if your actual router prefixes differ.
 
