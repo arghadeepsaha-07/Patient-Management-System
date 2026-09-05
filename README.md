@@ -107,7 +107,6 @@ Protected patient-management endpoints require a valid JWT access token.
 Authorization: Bearer <access_token>
 ```
 
-
 ## ✅ Validation
 
 The API uses **Pydantic** for request and response validation.
