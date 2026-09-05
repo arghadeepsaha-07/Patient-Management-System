@@ -58,7 +58,7 @@ Access Protected Patient Endpoints
 Creates a new user account.
 
 ```text
-POST /auth/register
+POST /register
 ```
 
 ### Login
@@ -66,7 +66,7 @@ POST /auth/register
 Authenticates an existing user and returns a JWT access token.
 
 ```text
-POST /auth/login
+POST /login
 ```
 
 ### Authentication Check
@@ -74,24 +74,20 @@ POST /auth/login
 Verifies whether the current request contains valid authentication credentials.
 
 ```text
-GET /auth/is_auth
+GET /is_auth
 ```
 
 Protected patient-management endpoints require a valid JWT access token.
-
-```text
-Authorization: Bearer <access_token>
-```
 
 ## 📡 API Endpoints
 
 ### 🔐 Authentication
 
-| Method | Endpoint         | Description                              |
-| ------ | ---------------- | ---------------------------------------- |
-| `POST` | `/auth/register` | Register a new user                      |
-| `POST` | `/auth/login`    | Login and receive a JWT access token     |
-| `GET`  | `/auth/is_auth`  | Verify whether the user is authenticated |
+| Method | Endpoint    | Description                              |
+| ------ | ----------- | ---------------------------------------- |
+| `POST` | `/register` | Register a new user                      |
+| `POST` | `/login`    | Login and receive a JWT access token     |
+| `GET`  | `/is_auth`  | Verify whether the user is authenticated |
 
 ### 🏥 Patient Management
 
@@ -102,6 +98,15 @@ Authorization: Bearer <access_token>
 | `POST`   | `/CREATE/create`      | Create a new patient       |
 | `PUT`    | `/UPDATE/update/{id}` | Update patient information |
 | `DELETE` | `/DELETE/delete/{id}` | Delete a patient           |
+
+### 🔑 Authorization
+
+Protected patient-management endpoints require a valid JWT access token.
+
+```text
+Authorization: Bearer <access_token>
+```
+
 
 ## ✅ Validation
 
