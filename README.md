@@ -310,4 +310,3 @@ PostgreSQL
 ```
 
 The project demonstrates how these components work together to build a structured and authenticated RESTful backend application.
-together to build a structured and authenticated RESTful backend application.
