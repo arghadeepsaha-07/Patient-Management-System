@@ -19,7 +19,7 @@ A RESTful **Patient Management API** built with **FastAPI, PostgreSQL, SQLAlchem
 * ⚠️ HTTP exception handling
 * 📖 Automatic Swagger/OpenAPI documentation
 
-## 🛠️ Tech Stack
+## 🛠️ Technologies Used
 
 * **Python**
 * **FastAPI**
@@ -27,7 +27,10 @@ A RESTful **Patient Management API** built with **FastAPI, PostgreSQL, SQLAlchem
 * **SQLAlchemy**
 * **Pydantic**
 * **Uvicorn**
+* **JWT Authentication**
+* **OAuth2 / Password Bearer**
 * **Swagger / OpenAPI**
+
 
 ## 🔐 Authentication
 
