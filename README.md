@@ -81,7 +81,7 @@ Protected patient-management endpoints require a valid JWT access token.
 
 ## 📡 API Endpoints
 
-### 🔐 Authentication
+### 🔐 Authentication Endpoints
 
 | Method | Endpoint    | Description                              |
 | ------ | ----------- | ---------------------------------------- |
