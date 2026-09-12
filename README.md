@@ -1,171 +1,88 @@
-# 🏥 Patient Management API
+# 🏥 Patient Management System API
 
-A RESTful **Patient Management API** built with **FastAPI, PostgreSQL, SQLAlchemy, and Pydantic**.
+A secure and modular **Patient Management REST API** built with **FastAPI, PostgreSQL, SQLAlchemy, JWT Authentication, Authorization, Email Notifications, and Alembic**.
 
-The project implements **user registration, login, JWT-based authentication, complete patient CRUD operations, request and response validation, custom email-domain validation, dependency injection, HTTP exception handling, and automatic OpenAPI documentation**.
+This project demonstrates a complete backend workflow where users can register and log in securely, receive an email notification after registration, and manage their own patient records through protected CRUD APIs.
+
+---
 
 ## 🚀 Features
 
-* 🔐 User registration and login
-* 🔑 JWT-based authentication
-* 🛡️ Protected patient-management endpoints
-* 🏥 Complete patient CRUD operations
-* ➕ Create patient records
-* 📋 Retrieve all patients
-* 🔎 Retrieve a patient by ID
-* ✏️ Update patient information
-* 🗑️ Delete patient records
-* 🗄️ PostgreSQL database integration
-* 🔄 SQLAlchemy ORM
-* ✅ Pydantic request and response validation
-* 📧 Custom email-domain validation
-* 💉 FastAPI dependency injection
-* ⚠️ HTTP exception handling
-* 📖 Automatic Swagger/OpenAPI documentation
-* 📁 Modular router and application structure
+### 🔐 Authentication & Authorization
 
-## 🛠️ Technologies Used
+- User Registration
+- User Login
+- Secure password hashing using `pwdlib`
+- JWT-based authentication
+- JWT token expiration
+- Protected API endpoints
+- User-based authorization
+- Authenticated user identification
+- Patient data ownership
 
-* **Python**
-* **FastAPI**
-* **PostgreSQL**
-* **SQLAlchemy**
-* **Pydantic**
-* **Uvicorn**
-* **JWT Authentication**
-* **Swagger / OpenAPI**
+### 👨‍⚕️ Patient Management
 
-## 🔐 Authentication
+- Create patient records
+- Retrieve all patients
+- Retrieve patient by ID
+- Update patient information
+- Delete patient records
+- User-specific patient data
+- PostgreSQL Foreign Key relationships
+- Cascade deletion for associated patient records
 
-The API provides user authentication through **registration, login, and JWT access tokens**.
+### 📧 Email Notification System
 
-### Authentication Flow
+After a client successfully registers, the application sends a registration email to the email address provided by the client.
 
-```text
-User Registration
-       ↓
-User Login
-       ↓
-Receive JWT Access Token
-       ↓
-Send Token with Protected Requests
-       ↓
-Access Protected Patient Endpoints
-```
+The project uses:
 
-### Register
+- SMTP
+- Gmail
+- FastAPI `BackgroundTasks`
+- Email notifications after successful registration
 
-Creates a new user account.
+The email is processed in the background so the API can return the registration response without waiting for the email operation to complete.
 
-```text
-POST /register
-```
+### 🗄️ Database
 
-### Login
+- PostgreSQL
+- SQLAlchemy ORM
+- Foreign Key relationships
+- Database constraints
+- Cascade delete
+- Automatic table creation
+- Alembic database migrations
 
-Authenticates an existing user and returns a JWT access token.
+### 📚 API Documentation
 
-```text
-POST /login
-```
+FastAPI automatically provides:
 
-### Authentication Check
+- Swagger UI
+- ReDoc
+- OpenAPI documentation
 
-Verifies whether the current request contains valid authentication credentials.
+---
 
-```text
-GET /is_auth
-```
+# 🛠️ Tech Stack
 
-Protected patient-management endpoints require a valid JWT access token.
+| Technology | Purpose |
+|------------|---------|
+| 🐍 Python | Backend Programming |
+| ⚡ FastAPI | REST API Framework |
+| 🐘 PostgreSQL | Relational Database |
+| 🧩 SQLAlchemy | ORM |
+| 🔑 JWT | Authentication |
+| 🔒 pwdlib | Password Hashing |
+| 📧 SMTP / Gmail | Email Notifications |
+| 🔄 Alembic | Database Migrations |
+| 📋 Pydantic | Data Validation |
+| 📖 OpenAPI | API Documentation |
+| 🐙 Git & GitHub | Version Control |
 
-## 📡 API Endpoints
+---
 
-### 🔐 Authentication Endpoints
-
-| Method | Endpoint    | Description                              |
-| ------ | ----------- | ---------------------------------------- |
-| `POST` | `/register` | Register a new user                      |
-| `POST` | `/login`    | Login and receive a JWT access token     |
-| `GET`  | `/is_auth`  | Verify whether the user is authenticated |
-
-### 🏥 Patient Management
-
-| Method   | Endpoint              | Description                |
-| -------- | --------------------- | -------------------------- |
-| `GET`    | `/GET/get`            | Retrieve all patients      |
-| `GET`    | `/GET/get/{id}`       | Retrieve a patient by ID   |
-| `POST`   | `/CREATE/create`      | Create a new patient       |
-| `PUT`    | `/UPDATE/update/{id}` | Update patient information |
-| `DELETE` | `/DELETE/delete/{id}` | Delete a patient           |
-
-### 🔑 Authorization
-
-Protected patient-management endpoints require a valid JWT access token.
-
-```text
-Authorization: Bearer <access_token>
-```
-
-## ✅ Validation
-
-The API uses **Pydantic** for request and response validation.
-
-### 📧 Email Validation
-
-Patient email addresses are validated using:
-
-* `EmailStr`
-* Custom email-domain validation
-
-Currently supported email domains include:
-
-* Gmail
-* Yahoo
-
-Invalid or unsupported email domains are rejected with a validation error.
-
-## 🗄️ Database
-
-The application uses **PostgreSQL** for persistent data storage and **SQLAlchemy ORM** for database interaction.
-
-Database-related functionality is organized separately from the API routing layer to improve maintainability and separation of concerns.
-
-## 💉 Dependency Injection
-
-FastAPI's dependency injection system is used for application dependencies such as database sessions and authentication.
-
-This keeps dependency management separate from endpoint logic and improves code organization.
-
-## ⚠️ Exception Handling
-
-The API uses FastAPI's `HTTPException` to handle errors such as:
-
-* Invalid requests
-* Patient not found
-* Authentication failures
-* Validation failures
-* Unauthorized requests
-
-## 📖 Automatic API Documentation
-
-FastAPI automatically generates interactive API documentation using **OpenAPI**.
-
-### Swagger UI
-
-```text
-http://127.0.0.1:8000/docs
-```
-
-### ReDoc
-
-```text
-http://127.0.0.1:8000/redoc
-```
-
-These interfaces can be used to explore and test the available API endpoints.
-
-## 📁 Project Structure
+# 📁 Project Structure
 
 ```text
 Patient-Management-System/
@@ -179,133 +96,557 @@ Patient-Management-System/
 │   ├── router.py
 │   └── settings.py
 │
-├── Database/
-│
-├── Pydantic/
+├── Mail/
+│   └── mail.py
 │
 ├── Routers/
-│   ├── Delete_Router/
-│   ├── Get_Router/
-│   ├── Post_Router/
-│   └── Put_router/
+│   ├── connect_security_with_crud.py
+│   ├── database_models.py
+│   ├── delete_router.py
+│   ├── get_router.py
+│   ├── post_router.py
+│   ├── put_router.py
+│   ├── pydantic_models.py
+│   └── router_all.py
 │
-├── .env
+├── migration/
+│   ├── versions/
+│   └── env.py
+│
 ├── .gitignore
-├── requirements.txt
+├── alembic.ini
 ├── main.py
+├── requirements.txt
 └── README.md
 ```
 
-> ⚠️ **Security:** The `.env` file should be listed in `.gitignore` and should **not** be committed to GitHub. Use a `.env.example` file with placeholder values to document required environment variables.
+---
 
-## ⚙️ Installation
-
-### 1. Clone the repository
-
-```bash
-git clone <your-github-repository-url>
-```
-
-### 2. Navigate to the project
-
-```bash
-cd Patient-Management-System
-```
-
-### 3. Create a virtual environment
-
-```bash
-python -m venv myenv
-```
-
-### 4. Activate the virtual environment
-
-**Windows:**
-
-```powershell
-myenv\Scripts\activate
-```
-
-### 5. Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 6. Configure PostgreSQL
-
-Create a PostgreSQL database and configure the database connection using your environment variables.
-
-Example:
+# 🔐 Authentication Flow
 
 ```text
-DATABASE_URL=<your-database-url>
-SECRET_KEY=<your-secret-key>
+                    ┌──────────────────┐
+                    │      Client      │
+                    └────────┬─────────┘
+                             │
+                             ▼
+                    ┌──────────────────┐
+                    │     Register     │
+                    └────────┬─────────┘
+                             │
+                             ▼
+                    ┌──────────────────┐
+                    │  Hash Password   │
+                    └────────┬─────────┘
+                             │
+                             ▼
+                    ┌──────────────────┐
+                    │    PostgreSQL    │
+                    │   User Database  │
+                    └────────┬─────────┘
+                             │
+                             ▼
+                    ┌──────────────────┐
+                    │  BackgroundTasks │
+                    │   Email Task     │
+                    └────────┬─────────┘
+                             │
+                             ▼
+                    ┌──────────────────┐
+                    │   Client Gmail   │
+                    └──────────────────┘
+
+
+                         LOGIN
+                           │
+                           ▼
+                  ┌─────────────────┐
+                  │ Verify Username │
+                  │ & Password      │
+                  └────────┬────────┘
+                           │
+                           ▼
+                  ┌─────────────────┐
+                  │ Generate JWT    │
+                  └────────┬────────┘
+                           │
+                           ▼
+                  ┌─────────────────┐
+                  │ Authorization   │
+                  │ Header          │
+                  └────────┬────────┘
+                           │
+                           ▼
+                  ┌─────────────────┐
+                  │ Verify JWT      │
+                  │ & User          │
+                  └────────┬────────┘
+                           │
+                           ▼
+                  ┌─────────────────┐
+                  │ Protected       │
+                  │ Patient APIs    │
+                  └─────────────────┘
 ```
 
-Do not commit real database credentials or secret keys to GitHub.
+---
 
-### 7. Run the application
+# 👤 User-Based Authorization
 
-```bash
-uvicorn main:app --reload
-```
-
-The API will be available at:
+Every patient is associated with the authenticated user who created the record.
 
 ```text
-http://127.0.0.1:8000
+┌────────────────────────┐
+│     database_model     │
+│                        │
+│ id                     │
+│ name                   │
+│ username               │
+│ email                  │
+└───────────┬────────────┘
+            │
+            │ id
+            ▼
+┌────────────────────────┐
+│   patients_database    │
+│                        │
+│ id                     │
+│ name                   │
+│ age                    │
+│ gender                 │
+│ problem                │
+│ user_id                │
+└────────────────────────┘
 ```
 
-## 🧪 Testing the API
+The patient table contains:
 
-After starting the server, open:
+```python
+user_id = Column(
+    Integer,
+    ForeignKey("database_model.id", ondelete="CASCADE")
+)
+```
+
+When a patient is created, the authenticated user's ID is stored:
+
+```python
+user_id = user.id
+```
+
+This allows the application to associate patient records with the authenticated user.
+
+For user-specific access, patient records can be filtered using:
+
+```python
+Patient_Database.user_id == user.id
+```
+
+This prevents users from accessing patient records belonging to other users when the corresponding authorization filter is applied to the CRUD operation.
+
+---
+
+# 📧 Email Registration System
+
+When a new client registers, the application:
+
+1. Receives registration information.
+2. Checks whether the username already exists.
+3. Checks whether the email already exists.
+4. Hashes the password.
+5. Creates the user in PostgreSQL.
+6. Commits the user to the database.
+7. Refreshes the database object.
+8. Adds an email task to FastAPI `BackgroundTasks`.
+9. Sends an email to the registered Gmail address.
+
+### Registration Email Flow
+
+```text
+POST /register
+      │
+      ▼
+Validate User
+      │
+      ▼
+Check Username & Email
+      │
+      ▼
+Hash Password
+      │
+      ▼
+Save User
+      │
+      ▼
+Commit Database
+      │
+      ▼
+BackgroundTasks
+      │
+      ▼
+Send Email
+      │
+      ▼
+Client receives Gmail
+```
+
+---
+
+# 🌐 API Endpoints
+
+## 🔐 Authentication
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/register` | Register a new user |
+| POST | `/login` | Login and receive JWT token |
+
+---
+
+## 👨‍⚕️ Patient Management
+
+| Method | Endpoint | Authentication |
+|--------|----------|----------------|
+| GET | `/patient_data/` | Public |
+| GET | `/patient_data/get` | 🔒 Required |
+| GET | `/patient_data/get_id/{id}` | 🔒 Required |
+| POST | `/patient_data/create` | 🔒 Required |
+| PUT | `/patient_data/update` | 🔒 Required |
+| DELETE | `/patient_data/delete/{id}` | 🔒 Required |
+
+---
+
+# 📖 Interactive API Documentation
+
+After starting the application:
+
+### Swagger UI
 
 ```text
 http://127.0.0.1:8000/docs
 ```
 
-Using Swagger UI, you can:
+### ReDoc
 
-1. Register a user
-2. Login
-3. Obtain the JWT access token
-4. Authorize protected requests
-5. Create patient records
-6. Retrieve patient records
-7. Retrieve a patient by ID
-8. Update patient information
-9. Delete patient records
+```text
+http://127.0.0.1:8000/redoc
+```
 
-## 🎯 Project Purpose
+Swagger UI allows you to interactively test and explore the API.
 
-This project was developed to demonstrate practical backend development using **FastAPI**, with an emphasis on:
+---
 
-* RESTful API design
-* Authentication and authorization
-* Database integration
-* CRUD operations
-* Request and response validation
-* Dependency injection
-* Exception handling
-* Modular application architecture
+# ⚙️ Installation
 
-## 📌 Key Concepts Demonstrated
+## 1. Clone the repository
+
+```bash
+git clone https://github.com/arghadeepsaha-07/patient-management-system.git
+```
+
+```bash
+cd patient-management-system
+```
+
+---
+
+## 2. Create a virtual environment
+
+```bash
+python -m venv myenv
+```
+
+Activate the environment on Windows:
+
+```bash
+myenv\Scripts\activate
+```
+
+---
+
+## 3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+# 🔑 Environment Variables
+
+Create a `.env` file in the project root.
+
+Example:
+
+```env
+DATABASE_URL=postgresql://username:password@localhost:5432/database_name
+
+SECRET_KEY=your_secret_key
+ALGORITHM=HS256
+EXP_TIME=30
+
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=your_email@gmail.com
+MAIL_PASSWORD=your_app_password
+```
+
+### ⚠️ Security
+
+Never upload your `.env` file to GitHub.
+
+Add the following to `.gitignore`:
+
+```gitignore
+.env
+myenv/
+__pycache__/
+*.pyc
+```
+
+For Gmail SMTP, use an appropriate **App Password** rather than exposing your normal Gmail password.
+
+---
+
+# 🗄️ Alembic Database Migrations
+
+Create a migration:
+
+```bash
+alembic revision --autogenerate -m "initial migration"
+```
+
+Apply migrations:
+
+```bash
+alembic upgrade head
+```
+
+Check migration history:
+
+```bash
+alembic history
+```
+
+Check the current migration:
+
+```bash
+alembic current
+```
+
+---
+
+# ▶️ Running the Application
+
+Start the FastAPI server:
+
+```bash
+uvicorn main:app --reload
+```
+
+The API will run at:
+
+```text
+http://127.0.0.1:8000
+```
+
+Open Swagger:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+---
+
+# 🧪 Example Registration Request
+
+### Endpoint
+
+```http
+POST /register
+```
+
+### Request Body
+
+```json
+{
+    "name": "Argha",
+    "username": "argha07",
+    "email": "example@gmail.com",
+    "password": "your_password"
+}
+```
+
+### Registration Flow
 
 ```text
 User Registration
        ↓
-User Login
+Validate Information
        ↓
-JWT Authentication
+Hash Password
        ↓
-FastAPI Router
+Save User
        ↓
-Pydantic Validation
+Send Background Email
        ↓
-SQLAlchemy ORM
+Registration Email
        ↓
-PostgreSQL
+Client's Gmail
 ```
 
-The project demonstrates how these components work together to build a structured and authenticated RESTful backend application.
+---
+
+# 🧪 Example Patient Request
+
+## Create Patient
+
+### Endpoint
+
+```http
+POST /patient_data/create
+```
+
+### Request Body
+
+```json
+{
+    "name": "Argha",
+    "age": 19,
+    "gender": "Male",
+    "height": 164,
+    "weight": 70,
+    "problem": "LiverProblem",
+    "email": "example@gmail.com",
+    "phone_no": "9876543210",
+    "emergency_phone_no": "9876501234"
+}
+```
+
+The authenticated user's ID is automatically associated with the patient record.
+
+---
+
+# 🔒 Security Features
+
+The project implements:
+
+- JWT authentication
+- Password hashing
+- Token expiration
+- Protected routes
+- User-based authorization
+- User-specific patient records
+- Foreign Key relationships
+- Cascade deletion
+- Pydantic input validation
+- Environment-based secrets
+- SMTP authentication
+- Background email processing
+
+---
+
+# 🧠 Backend Concepts Demonstrated
+
+This project demonstrates practical backend development concepts:
+
+```text
+FastAPI
+│
+├── APIRouter
+├── Dependency Injection
+├── Depends()
+├── HTTPException
+├── Response Models
+├── Pydantic
+└── BackgroundTasks
+│
+├── Authentication
+│   ├── Registration
+│   ├── Login
+│   ├── Password Hashing
+│   └── JWT
+│
+├── Authorization
+│   ├── JWT Verification
+│   ├── Current User
+│   └── User-Owned Data
+│
+├── Database
+│   ├── PostgreSQL
+│   ├── SQLAlchemy
+│   ├── Foreign Keys
+│   ├── Constraints
+│   └── Cascade Delete
+│
+├── Email
+│   ├── SMTP
+│   ├── Gmail
+│   └── BackgroundTasks
+│
+└── Database Migration
+    └── Alembic
+```
+
+---
+
+# 📈 Future Improvements
+
+- [ ] Role-Based Access Control
+- [ ] Doctor and Admin roles
+- [ ] Refresh Tokens
+- [ ] Pagination
+- [ ] Advanced patient search
+- [ ] Patient medical history
+- [ ] Automated testing with Pytest
+- [ ] Docker containerization
+- [ ] CI/CD pipeline
+- [ ] Production deployment
+- [ ] API rate limiting
+- [ ] Logging and monitoring
+- [ ] Redis caching
+- [ ] Frontend integration
+
+---
+
+# 🎯 Project Goals
+
+The main goals of this project are:
+
+- Build a real-world backend application.
+- Practice REST API development.
+- Implement secure authentication and authorization.
+- Work with PostgreSQL and SQLAlchemy.
+- Understand database relationships.
+- Implement email notifications.
+- Learn database migrations with Alembic.
+- Follow modular backend architecture.
+- Build a project suitable for a developer portfolio.
+
+---
+
+# 👨‍💻 Author
+
+## Arghadeep Saha
+
+Computer Science & Engineering Student
+
+### GitHub
+
+[https://github.com/arghadeepsaha-07](https://github.com/arghadeepsaha-07)
+
+---
+
+# ⭐ Support
+
+If you find this project useful or interesting, consider giving the repository a ⭐ on GitHub.
+
+---
+
+## 📌 Project Status
+
+**🚧 Development / Learning Project**
+
+Built with:
+
+**Python • FastAPI • PostgreSQL • SQLAlchemy • JWT • Alembic • SMTP • Gmail**
