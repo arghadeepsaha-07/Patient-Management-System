@@ -1,7 +1,5 @@
-from sqlalchemy import Column,Integer,String
-from sqlalchemy.orm import declarative_base
-
-Base = declarative_base()
+from sqlalchemy import Column,Integer,String,ForeignKey
+from Authentication.bases import Base
 
 class Patient_Database(Base):
     __tablename__ = "patients_database"
@@ -16,6 +14,9 @@ class Patient_Database(Base):
     email = Column(String)
     phone_no = Column(String,nullable=False)
     emergency_phone_no = Column(String)
+    
+    
+    user_id = Column(Integer, ForeignKey("database_model.id",ondelete="CASCADE"))
     
     '''
     What you cannot do

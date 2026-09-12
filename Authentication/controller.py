@@ -1,4 +1,4 @@
-from fastapi import HTTPException,status,Depends,Request
+from fastapi import HTTPException,status,Depends,Request,BackgroundTasks
 from Authentication.database_models import Database
 from Authentication.pydantic_models import Pydantic,Login_Schema
 from fastapi.security import HTTPBearer
@@ -9,6 +9,8 @@ from datetime import datetime,timedelta
 import jwt
 from jwt.exceptions import InvalidTokenError
 from Authentication.bases import get_db
+from Mail.mail import send_email
+
 
 
 security = HTTPBearer()
@@ -21,7 +23,7 @@ def get_password_hash(password):
 def verify_password_hash(plain_password,hash_password):
     return password_hash.verify(plain_password,hash_password)
 
-def register(body:Pydantic,db:Session=Depends(get_db)):
+async def register(body:Pydantic,db:Session,bg_task:BackgroundTasks):
     user = db.query(Database).filter(Database.username == body.username).first()
     
     if user:
@@ -45,10 +47,13 @@ def register(body:Pydantic,db:Session=Depends(get_db)):
     db.commit()
     db.refresh(new_user)
     
+    bg_task.add_task(send_email, [new_user.email])
+
+    
     return new_user
 
 
-def login(body:Login_Schema,db:Session=Depends(get_db)):
+def login(body:Login_Schema,db:Session):
     user = db.query(Database).filter(Database.username == body.username).first()
     
     if not user:
@@ -64,7 +69,7 @@ def login(body:Login_Schema,db:Session=Depends(get_db)):
     return {"token":token}
 
 
-def is_authorization(request:Request,db:Session=Depends(get_db),secure:Session=Depends(security)):
+def is_authorization(request:Request,db:Session=Depends(get_db),secure = Depends(security)):
     try:
         token = request.headers.get("authorization")
         

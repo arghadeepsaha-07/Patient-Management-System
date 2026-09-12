@@ -1,14 +1,15 @@
-from fastapi import APIRouter,Depends,Request
+from fastapi import APIRouter,Depends,Request,BackgroundTasks
 from Authentication.controller import register,login,is_authorization
 from Authentication.bases import get_db
 from Authentication.pydantic_models import Pydantic,Pydantic_Response,Login_Schema
 from sqlalchemy.orm import Session
 
+
 user_router = APIRouter()
 
 @user_router.post("/register",response_model=Pydantic_Response)
-def register_router(body:Pydantic,db:Session=Depends(get_db)):
-    return register(body,db)
+async def register_router(body:Pydantic,bg_task:BackgroundTasks,db:Session=Depends(get_db)):
+    return await register(body,db,bg_task)
 
 @user_router.post("/login")
 def login_router(body:Login_Schema,db:Session=Depends(get_db)):

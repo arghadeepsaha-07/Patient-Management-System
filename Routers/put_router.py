@@ -1,20 +1,25 @@
 from fastapi import APIRouter,Depends,status,HTTPException
-from Database.database_engine import get_db
-from Database.database_models import Patient_Database
-from Pydantic.models import Update_Response,Update_Patient
+from Authentication.bases import get_db
+from Routers.database_models import Patient_Database
+from Routers.pydantic_models import Update_Patient
 from sqlalchemy.orm import Session
-from Authentication.controller import is_authorization
+from Authentication.database_models import Database
 
-router = APIRouter(prefix="/UPDATE")
-
-@router.put("/update/{id}",response_model=Update_Response)
-def update_router(id:str,patient:Update_Patient,db:Patient_Database=Depends(get_db),credentials:Session=Depends(is_authorization)):
+def update_router(id:str,patient:Update_Patient,db:Patient_Database,user:Database):
 
     db_user = db.query(Patient_Database).filter(Patient_Database.id == id).first()
 
     if not db_user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Patient Data not Found !")
 
+    
+    
+    if db_user.user_id != user.id:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="You are not allowed to delete this task")
+    
+    
+    
+    
     if patient.name is not None:
         db_user.name = patient.name
 
