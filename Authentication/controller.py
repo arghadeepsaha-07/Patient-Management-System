@@ -47,7 +47,10 @@ async def register(body:Pydantic,db:Session,bg_task:BackgroundTasks):
     db.commit()
     db.refresh(new_user)
     
+    print(new_user)
+    
     bg_task.add_task(send_email, [new_user.email])
+    print("DOne")
 
     
     return new_user

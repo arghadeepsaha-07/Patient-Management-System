@@ -15,8 +15,8 @@ conf = ConnectionConfig(
     MAIL_PORT = int(os.getenv("MAIL_PORT")),
     MAIL_SERVER = os.getenv("MAIL_SERVER"), #smtp->protocal of email
     MAIL_FROM_NAME=os.getenv("MAIL_FROM_NAME"),
-    MAIL_STARTTLS = os.getenv("MAIL_STARTTLS") == "True",
-    MAIL_SSL_TLS = os.getenv("MAIL_SSL_TLS") == "True",
+    MAIL_STARTTLS = True,
+    MAIL_SSL_TLS = False,
     USE_CREDENTIALS = True,
     VALIDATE_CERTS = True
 )
