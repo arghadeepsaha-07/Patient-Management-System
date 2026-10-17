@@ -20,6 +20,11 @@ conf = ConnectionConfig(
     USE_CREDENTIALS = True,
     VALIDATE_CERTS = True
 )
+'''
+os.getenv() always reads environment variables as strings.
+
+
+'''
 
 '''
 For Understanding:->
