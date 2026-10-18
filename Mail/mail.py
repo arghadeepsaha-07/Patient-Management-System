@@ -49,40 +49,40 @@ Those are completely separate passwords.
 
 
 
-# async def send_email(emails : List[str]) -> JSONResponse:
-#     html = """<p>Hi, Thanks for Registration. Our Team will connect with You Soon !</p> """
+async def send_email(emails : List[str]) -> JSONResponse:
+    html = """<p>Hi, Thanks for Registration. Our Team will connect with You Soon !</p> """
 
-#     message = MessageSchema(
-#         subject="Registration Confirmation",
-#         recipients=emails,
-#         body=html,
-#         subtype=MessageType.html)
+    message = MessageSchema(
+        subject="Registration Confirmation",
+        recipients=emails,
+        body=html,
+        subtype=MessageType.html)
 
-#     fm = FastMail(conf)
-#     await fm.send_message(message)
-#     return JSONResponse(status_code=200, content={"message": "email has been sent"})
+    fm = FastMail(conf)
+    await fm.send_message(message)
+    return JSONResponse(status_code=200, content={"message": "email has been sent"})
     
     
-async def send_email(emails: List[str]) -> JSONResponse:
-    if not resend.api_key:
-        raise ValueError("RESEND_API_KEY is missing")
+# async def send_email(emails: List[str]) -> JSONResponse:
+#     if not resend.api_key:
+#         raise ValueError("RESEND_API_KEY is missing")
 
-    html = """
-    <p>Hi, thanks for registering!</p>
-    <p>Our team will connect with you soon.</p>
-    """
+#     html = """
+#     <p>Hi, thanks for registering!</p>
+#     <p>Our team will connect with you soon.</p>
+#     """
 
-    params = {
-        "from": "onboarding@resend.dev",
-        "to": emails,
-        "subject": "Registration Confirmation",
-        "html": html,
-    }
+#     params = {
+#         "from": "onboarding@resend.dev",
+#         "to": emails,
+#         "subject": "Registration Confirmation",
+#         "html": html,
+#     }
 
-    result = resend.Emails.send(params)
-    print("Resend response:", result, flush=True)
+#     result = resend.Emails.send(params)
+#     print("Resend response:", result, flush=True)
 
-    return JSONResponse(
-        status_code=200,
-        content={"message": "Email request processed"}
-    )
+#     return JSONResponse(
+#         status_code=200,
+#         content={"message": "Email request processed"}
+#     )
